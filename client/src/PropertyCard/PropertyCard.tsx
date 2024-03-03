@@ -1,18 +1,25 @@
+import { truncate } from "lodash";
 import "./PropertyCard.css";
 import { AiFillHeart } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-interface Props {
+export interface Props {
   card: {
-    name: string;
+    id: string;
+    title: string;
     price: string;
-    detail: string;
+    description: string;
     image: string;
   };
 }
 
 function PropertyCard({ card }: Props) {
+  const navigate = useNavigate();
   return (
-    <div className="flexColStart r-card">
+    <div
+      className="flexColStart r-card"
+      onClick={() => navigate(`/properties/${card.id}`)}
+    >
       <AiFillHeart size={24} color="white" />
       <img src={card.image} alt="home" />
 
@@ -21,8 +28,12 @@ function PropertyCard({ card }: Props) {
         <span>{card.price}</span>
       </span>
 
-      <span className="primaryText">{card.name}</span>
-      <span className="secondaryText">{card.detail}</span>
+      <span className="primaryText">
+        {truncate(card.title, { length: 15 })}
+      </span>
+      <span className="secondaryText">
+        {truncate(card.description, { length: 80 })}
+      </span>
     </div>
   );
 }
