@@ -1,14 +1,20 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import "./Property.css";
 import { useLocation } from "react-router-dom";
-import { getProperty } from "../../utils/api";
+import { getProperty, removeBooking } from "../../utils/api";
 import { PuffLoader } from "react-spinners";
 import { AiFillHeart, AiTwotoneCar } from "react-icons/ai";
 import { MdMeetingRoom, MdLocationPin } from "react-icons/md";
 import { FaShower } from "react-icons/fa";
 import Map from "../../components/Map/Map";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useAuthCheck from "../../hooks/useAuthCheck";
+import { useAuth0 } from "@auth0/auth0-react";
+import BookingModal from "../../components/BookingModal/BookingModal";
+import UserDetailContext from "../../context/UserDetailContext";
+import { Button } from "@mantine/core";
+import { toast } from "react-toastify";
+import Heart from "../../components/Heart/Heart";
 
 function Property() {
   const { pathname } = useLocation();
@@ -21,6 +27,22 @@ function Property() {
 
   const [modalOpened, setModalOpened] = useState(false);
   const { validateLogin } = useAuthCheck();
+  const { user } = useAuth0();
+  const {
+    userDetails: { token, bookings },
+    setUserDetails,
+  } = useContext(UserDetailContext);
+
+  const { mutate: cancelBooking, isLoading: cancelling } = useMutation({
+    mutationFn: () => removeBooking(id, user?.email, token),
+    onSuccess: () => {
+      setUserDetails((prev: any) => ({
+        ...prev,
+        bookings: prev.bookings.filter((booking: any) => booking?.id !== id),
+      }));
+      toast.success("Booking cancelled", { position: "bottom-right" });
+    },
+  });
 
   if (isLoading) {
     return (
@@ -48,7 +70,7 @@ function Property() {
       <div className="flexColStart paddings innerWidth property-container">
         {/* Like Button */}
         <div className="like">
-          <AiFillHeart size={24} color="white" />
+          <Heart id={id} />
         </div>
 
         {/* Image */}
@@ -102,7 +124,40 @@ function Property() {
             </div>
 
             {/* Booking Button */}
-            <button className="button">Book your visit</button>
+            {bookings?.map((booking: any) => booking.id).includes(id) ? (
+              <>
+                <Button
+                  disabled={cancelling}
+                  variant="outline"
+                  w="100%"
+                  color="red"
+                  onClick={() => cancelBooking()}
+                >
+                  <span>Cancel booking</span>
+                </Button>
+                <span>
+                  Your visit already booked for date{" "}
+                  {
+                    bookings?.filter((booking: any) => booking?.id === id)[0]
+                      .date
+                  }
+                </span>
+              </>
+            ) : (
+              <button
+                className="button"
+                onClick={() => validateLogin() && setModalOpened(true)}
+              >
+                Book your visit
+              </button>
+            )}
+
+            <BookingModal
+              opened={modalOpened}
+              setOpened={setModalOpened}
+              propertyId={id}
+              email={user?.email}
+            />
           </div>
 
           {/* Right Side */}

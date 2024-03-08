@@ -99,10 +99,16 @@ export const favBookings = asyncHandler(async (req, res) => {
   const { email } = req.body;
   const { residencyId } = req.params;
 
+  console.log("favbookings", email);
+
   try {
     const user = await prisma.user.findUnique({
       where: { email },
     });
+
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
 
     if (user.favResidenciesID.includes(residencyId)) {
       const updatedUser = await prisma.user.update({
@@ -114,9 +120,10 @@ export const favBookings = asyncHandler(async (req, res) => {
         },
       });
 
-      res.send({ message: "Removed from favorites", user: updatedUser });
+      res.send({ message: "Removed from favourites", user: updatedUser });
     } else {
       const updateUser = await prisma.user.update({
+        where: { email },
         data: {
           favResidenciesID: {
             push: residencyId,
@@ -124,7 +131,7 @@ export const favBookings = asyncHandler(async (req, res) => {
         },
       });
 
-      res.send({ message: "Added to favorites", user: updateUser });
+      res.send({ message: "Added to favourites", user: updateUser });
     }
   } catch (err) {
     throw new Error(err.message);

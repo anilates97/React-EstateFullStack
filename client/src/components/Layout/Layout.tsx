@@ -6,10 +6,14 @@ import { useContext, useEffect } from "react";
 import UserDetailContext from "../../context/UserDetailContext";
 import { useMutation } from "react-query";
 import { createUser } from "../../utils/api";
+import useFavourites from "../../hooks/useFavourites";
+import useBookings from "../../hooks/useBookings";
 
 function Layout() {
   const { isAuthenticated, user, getAccessTokenWithPopup } = useAuth0();
   const { setUserDetails } = useContext(UserDetailContext);
+  useFavourites();
+  useBookings();
 
   const { mutate } = useMutation({
     mutationKey: [user?.email],
@@ -24,8 +28,9 @@ function Layout() {
           scope: "openid profile email",
         },
       });
-      localStorage.setItem("access_token", res || "");
+      localStorage.setItem("access_token", res!);
       setUserDetails((prev: any) => ({ ...prev, token: res }));
+      mutate(res || "");
 
       console.log("response", res);
     };

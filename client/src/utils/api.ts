@@ -54,3 +54,119 @@ export const createUser = async (email: string, token: string) => {
     throw error;
   }
 };
+
+export const bookVisit = async (
+  date: Date,
+  propertId?: string,
+  email?: string,
+  token?: string
+) => {
+  try {
+    await api.post(
+      `/user/bookVisit/${propertId}`,
+      {
+        email,
+        id: propertId,
+        date: dayjs(date).format("DD/MM/YYYY"),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error(
+      "Something went wrong while visiting booking, Please try again"
+    );
+    throw error;
+  }
+};
+
+export const removeBooking = async (
+  id: string,
+  email?: string,
+  token?: string
+) => {
+  try {
+    await api.post(
+      `/user/removeBooking/${id}`,
+      { email },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error(
+      "Something went wrong while cancelling booking, Please try again"
+    );
+    throw error;
+  }
+};
+
+export const toFav = async (id: string, email: string, token: string) => {
+  try {
+    await api.post(
+      `/user/myFavourites/${id}`,
+      { email },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error(
+      "Something went wrong while adding to favourites, Please try again"
+    );
+    throw error;
+  }
+};
+
+export const getAllFav = async (email?: string, token?: string) => {
+  if (!token) return;
+
+  try {
+    const res = await api.post(
+      `/user/allFav/`,
+      { email },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return res.data["favResidenciesID"];
+  } catch (error) {
+    toast.error(
+      "Something went wrong while fetching all favourites, Please try again"
+    );
+    throw error;
+  }
+};
+
+export const getAllBookings = async (email?: string, token?: string) => {
+  if (!token) return;
+
+  try {
+    const res = await api.post(
+      `/user/allBookings/`,
+      { email },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return res.data["bookedVisits"];
+  } catch (error) {
+    toast.error(
+      "Something went wrong while fetching bookings, Please try again"
+    );
+    throw error;
+  }
+};

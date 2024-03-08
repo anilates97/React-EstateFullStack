@@ -15,7 +15,7 @@ router.post("/register", jwtCheck, createUser);
 router.post("/bookVisit/:id", jwtCheck, bookVisit);
 router.post("/allBookings/", getAllBookings);
 router.post("/removeBooking/:id", jwtCheck, cancelBooking);
-router.post("/myFavorites/:residencyId", jwtCheck, favBookings);
+router.post("/myFavourites/:residencyId", jwtCheck, favBookings);
 router.post("/allFav", jwtCheck, getAllFav);
 
 export { router as userRoute };
