@@ -170,3 +170,22 @@ export const getAllBookings = async (email?: string, token?: string) => {
     throw error;
   }
 };
+
+export const createResidency = async (data: any, token: string) => {
+  try {
+    await api.post(
+      `/residency/create/`,
+      { data },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error(
+      "Something went wrong while creating residency, Please try again"
+    );
+    throw error;
+  }
+};
