@@ -1,22 +1,19 @@
 import { PuffLoader } from "react-spinners";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import useProperties from "../../hooks/useProperties";
-import "./Properties.css";
+import "../Properties/Properties.css";
 import PropertyCard from "../../PropertyCard/PropertyCard";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { PropertyDetails } from "../../components/AddLocation/AddLocation";
+import { Card } from "../Properties/Properties";
+import UserDetailContext from "../../context/UserDetailContext";
 
-export interface Card {
-  id: string;
-  title: string;
-  price: string;
-  description: string;
-  image: string;
-}
-
-function Properties() {
+function Favourites() {
   const { data, isError, isLoading } = useProperties();
   const [filter, setFilter] = useState("");
+  const {
+    userDetails: { favourites },
+  } = useContext(UserDetailContext);
 
   if (isError) {
     return (
@@ -34,7 +31,7 @@ function Properties() {
     );
   }
 
-  console.log("residencies", data);
+  console.log("favourites", favourites);
 
   return (
     <div className="wrapper">
@@ -43,6 +40,11 @@ function Properties() {
 
         <div className="paddings flexCenter properties">
           {data.residencies
+
+            .filter((property: PropertyDetails) =>
+              favourites?.includes(property.id)
+            )
+
             .filter(
               (property: PropertyDetails) =>
                 property.title.toLowerCase().includes(filter.toLowerCase()) ||
@@ -58,4 +60,4 @@ function Properties() {
   );
 }
 
-export default Properties;
+export default Favourites;

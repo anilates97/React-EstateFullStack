@@ -117,9 +117,9 @@ function Property() {
             <div className="flexStart" style={{ gap: "1rem" }}>
               <MdLocationPin size={25} />
               <span className="secondaryText">
-                {data?.address}
-                {data?.city}
-                {data?.country}
+                <span className="marginR-sm">{data?.address}</span>
+                <span>{data?.city}/</span>
+                <span>{data?.country}</span>
               </span>
             </div>
 

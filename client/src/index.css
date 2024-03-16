@@ -81,6 +81,11 @@ a {
   color: rgb(140 139 139);
   font-size: 0.9rem;
 }
+
+.marginR-sm {
+  margin-right: 0.5rem;
+}
+
 .orangeText {
   color: orange;
   font-size: 1.5rem;
