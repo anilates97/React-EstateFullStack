@@ -1,8 +1,8 @@
 import { HiLocationMarker } from "react-icons/hi";
 
 interface SearchBarProps {
-  filter: string;
-  setFilter: React.Dispatch<React.SetStateAction<string>>;
+  filter?: string;
+  setFilter?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function SearchBar({ filter, setFilter }: SearchBarProps) {
@@ -13,7 +13,7 @@ function SearchBar({ filter, setFilter }: SearchBarProps) {
         placeholder="Search Property"
         type="text"
         value={filter}
-        onChange={(e: any) => setFilter(e.target.value)}
+        onChange={(e: any) => setFilter!(e.target.value)}
       />
       <button className="button">Search</button>
     </div>

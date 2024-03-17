@@ -1,4 +1,4 @@
-import { Button, Container, Group, Modal, Stepper } from "@mantine/core";
+import { Container, Modal, Stepper } from "@mantine/core";
 import { useState } from "react";
 import AddLocation from "../AddLocation/AddLocation";
 import { useAuth0 } from "@auth0/auth0-react";

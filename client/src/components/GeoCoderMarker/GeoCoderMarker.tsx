@@ -19,34 +19,6 @@ interface Props {
   address: string;
 }
 
-interface Location {
-  [key: string]: any;
-}
-
-interface Attributes {
-  [key: string]: any;
-}
-
-interface Extent {
-  [key: string]: any;
-}
-
-interface Candidate {
-  address: string;
-  location: Location;
-  score: number;
-  attributes: Attributes;
-  extent: Extent;
-}
-
-interface Response {
-  candidates: Candidate[];
-  spatialReference: {
-    wkid: number;
-    latestWkid: number;
-  };
-}
-
 interface LatLng {
   lat: number;
   lng: number;
@@ -81,7 +53,7 @@ function GeoCoderMarker({ address }: Props) {
     (ELG as any)
       .geocode()
       .text(address)
-      .run((err: any, results: Results, response: Response) => {
+      .run((results: Results) => {
         if (results?.results?.length > 0) {
           const { lat, lng } = results?.results[0].latlng;
           setPosition([lat, lng]);

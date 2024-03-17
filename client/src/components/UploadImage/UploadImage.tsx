@@ -34,7 +34,7 @@ function UploadImage({
         uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
         maxFiles: 1,
       },
-      (err: any, result: any) => {
+      (result: any) => {
         if (result.event === "success") {
           setImageURL(result.info.secure_url);
         }

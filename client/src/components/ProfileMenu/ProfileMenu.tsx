@@ -1,5 +1,4 @@
 import { Avatar, Menu } from "@mantine/core";
-import { replace } from "lodash";
 import { useNavigate } from "react-router-dom";
 
 interface Props {

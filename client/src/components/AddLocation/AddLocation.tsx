@@ -6,7 +6,7 @@ import Map from "../Map/Map";
 import { FormEvent } from "react";
 
 export interface PropertyDetails {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   price: number;

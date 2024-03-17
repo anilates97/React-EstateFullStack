@@ -1,6 +1,5 @@
 import { truncate } from "lodash";
 import "./PropertyCard.css";
-import { AiFillHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Heart from "../components/Heart/Heart";
 
