@@ -35,7 +35,7 @@ function Residencies() {
 
         <Swiper {...sliderSettings}>
           <SliderButtons />
-          {data.residencies.slice(0, 8).map((card: Card, index: number) => {
+          {data.residencies?.slice(0, 8).map((card: Card, index: number) => {
             return (
               <SwiperSlide key={index}>
                 <PropertyCard card={card} />
