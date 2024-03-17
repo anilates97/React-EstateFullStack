@@ -38,7 +38,7 @@ function Property() {
     onSuccess: () => {
       setUserDetails((prev: any) => ({
         ...prev,
-        bookings: prev.bookings.filter((booking: any) => booking?.id !== id),
+        bookings: prev.bookings?.filter((booking: any) => booking?.id !== id),
       }));
       toast.success("Booking cancelled", { position: "bottom-right" });
     },

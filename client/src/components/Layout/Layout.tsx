@@ -30,7 +30,7 @@ function Layout() {
       });
       localStorage.setItem("access_token", res!);
       setUserDetails((prev: any) => ({ ...prev, token: res }));
-      mutate(res || "");
+      mutate(res!);
     };
 
     isAuthenticated && getTokenAndRegister();
