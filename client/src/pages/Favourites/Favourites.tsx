@@ -31,8 +31,6 @@ function Favourites() {
     );
   }
 
-  console.log("favourites", favourites);
-
   return (
     <div className="wrapper">
       <div className="flexColCenter paddings innerWidth properties-container">

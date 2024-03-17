@@ -31,8 +31,6 @@ function Bookings() {
     );
   }
 
-  console.log("residencies", data);
-
   return (
     <div className="wrapper">
       <div className="flexColCenter paddings innerWidth properties-container">
@@ -42,7 +40,9 @@ function Bookings() {
           {data.residencies
 
             .filter((property: PropertyDetails) =>
-              bookings.map((bookings: any) => bookings.id).includes(property.id)
+              bookings
+                ?.map((bookings: any) => bookings.id)
+                .includes(property.id)
             )
 
             .filter(

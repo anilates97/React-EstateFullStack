@@ -64,7 +64,6 @@ function Property() {
     );
   }
 
-  console.log("data", data);
   return (
     <div className="wrapper">
       <div className="flexColStart paddings innerWidth property-container">

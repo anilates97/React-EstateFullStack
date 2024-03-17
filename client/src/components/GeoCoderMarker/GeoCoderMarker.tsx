@@ -82,7 +82,6 @@ function GeoCoderMarker({ address }: Props) {
       .geocode()
       .text(address)
       .run((err: any, results: Results, response: Response) => {
-        console.log("results", results);
         if (results?.results?.length > 0) {
           const { lat, lng } = results?.results[0].latlng;
           setPosition([lat, lng]);
