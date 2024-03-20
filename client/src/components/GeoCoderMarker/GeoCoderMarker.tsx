@@ -53,11 +53,13 @@ function GeoCoderMarker({ address }: Props) {
     (ELG as any)
       .geocode()
       .text(address)
-      .run((results: Results) => {
-        if (results?.results?.length > 0) {
+      .run((err: any, results: Results, response: any) => {
+        if (results?.results?.length > 0 && response) {
           const { lat, lng } = results?.results[0].latlng;
           setPosition([lat, lng]);
-          map.flyTo([lat, lng], 6);
+          map.flyTo([lat, lng], 15);
+        } else {
+          throw new Error(err);
         }
       });
   }, [address]);
